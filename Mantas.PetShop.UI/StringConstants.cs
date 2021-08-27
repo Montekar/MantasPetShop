@@ -2,13 +2,13 @@
 {
     public class StringConstants
     {
-        public static readonly string WelcomeGreeting = "Welcome to the PetFinder - web portal which opens new horizon for you - The Pet Owner.";
+        public static readonly string WelcomeGreeting = "Welcome to the PetShop";
 
-        public static readonly string CreatePetMenuText = "...::Type 1::... To create new pet";
-        public static readonly string ShowPetsMenuText = "...::Type 2::... To see available pets";
-        public static readonly string EditPet = "...::Type 3::... To edit selected video from the list";
-        public static readonly string DeletePet = "...::Type 4::... To delete a pet from the system";
-        public static readonly string SearchPet = "...::Type 5::... To search for pet";
+        public static readonly string CreatePet = "...::Type 1::... To create a new pet";
+        public static readonly string ShowAllPets = "...::Type 4::... To see all available pets";
+        public static readonly string UpdatePet = "...::Type 3::... To update a pet";
+        public static readonly string DeletePet = "...::Type 2::... To delete a pet";
+        public static readonly string SearchForAPet = "...::Type 5::... To search for a pet";
 
         public const string CreatePetGreeting = "Create Video";
         public static string EditPetsGreeting = "Here is a list of Pets in Library, to edit video type its Id and press Enter.";

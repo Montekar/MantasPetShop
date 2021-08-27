@@ -1,6 +1,6 @@
 ﻿namespace Mantas.PetShop.Core.IServices
 {
-    public interface PetService
+    public interface IPetTypeService
     {
         
     }
