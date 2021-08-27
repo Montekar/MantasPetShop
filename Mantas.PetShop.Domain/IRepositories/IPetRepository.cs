@@ -8,7 +8,7 @@ namespace Mantas.PetShop.Domain.IRepositories
         List<Pet> GetPets(); 
         
         Pet CreatePet(Pet pet);
-        Pet DeletePet(Pet pet);
+        Pet DeletePet(int id);
         Pet UpdatePet(Pet pet);
     }
 }

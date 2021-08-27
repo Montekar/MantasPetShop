@@ -69,8 +69,8 @@ namespace Mantas.PetShop.UI
         {
             Print(StringConstants.WelcomeGreeting);
             Print(StringConstants.CreatePet);
-            Print(StringConstants.UpdatePet);
             Print(StringConstants.DeletePet);
+            Print(StringConstants.UpdatePet);
             Print(StringConstants.ShowAllPets);
             Print(StringConstants.SearchForAPet);
         }
@@ -103,7 +103,15 @@ namespace Mantas.PetShop.UI
         
         public void DeletePet()
         {
-            
+            Print("Select pet to remove:");
+            ShowAllPets();
+            int id = Convert.ToInt32(Console.ReadLine());
+            var pet = new Pet()
+            {
+                Id = id
+            };
+            pet = _petService.DeletePet(id);
+            Print("You just removed a pet");
         }
 
         public void UpdatePet()

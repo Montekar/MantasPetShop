@@ -27,7 +27,12 @@ namespace Mantas.PetShop.Domain.Services
 
         public Pet DeletePet(Pet pet)
         {
-            return _repo.DeletePet(pet);        }
+            throw new System.NotImplementedException();
+        }
+
+        public Pet DeletePet(int id)
+        {
+            return _repo.DeletePet(id);        }
 
         public Pet UpdatePet(Pet pet)
         {

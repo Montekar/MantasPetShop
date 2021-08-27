@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Domain.IRepositories;
 
@@ -7,7 +8,7 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
     public class PetRepository : IPetRepository
     {
         private static List<Pet> _petTable = new List<Pet>();
-        private static int _id = 1;
+        private static int _id = 0;
 
         public List<Pet> GetPets()
         {
@@ -16,14 +17,20 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
 
         public Pet CreatePet(Pet pet)
         {
-            pet.Id = _id++;
+            pet.Id = ++_id;
             _petTable.Add(pet);
             return pet;
         }
 
-        public Pet DeletePet(Pet pet)
+        public Pet DeletePet(int id)
         {
-            throw new System.NotImplementedException();
+            Pet pet = _petTable.Find(pet => pet.Id == id);
+            if (pet != null)
+            {
+                _petTable.Remove(pet);
+            }
+
+            return pet;
         }
 
         public Pet UpdatePet(Pet pet)
