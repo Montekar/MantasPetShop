@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Domain.IRepositories;
@@ -10,7 +11,32 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
         private static List<Pet> _petTable = new List<Pet>();
         private static int _id = 0;
 
-        public List<Pet> GetPets()
+        public PetRepository()
+        {
+            CreatePet(new Pet
+            {
+                Name = "pukis",
+                Color = "black",
+                PetType = "Cat",
+                Price = 100
+            });
+            CreatePet(new Pet
+            {
+                Name = "jonas",
+                Color = "black",
+                PetType = "dog",
+                Price = 200
+            });
+            CreatePet(new Pet
+            {
+                Name = "jolanta",
+                Color = "black",
+                PetType = "Parrot",
+                Price = 999
+            });
+        }
+
+        public IEnumerable<Pet> GetPets()
         {
             return _petTable;
         }
@@ -35,7 +61,22 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
 
         public Pet UpdatePet(Pet pet)
         {
-            throw new System.NotImplementedException();
+            Pet petUpdate = _petTable.Find(p => p.Id == pet.Id);
+            if (petUpdate != null)
+            {
+                petUpdate.Name = pet.Name;
+                petUpdate.Color = pet.Color;
+                petUpdate.PetType = pet.PetType;
+                petUpdate.Birthdate = pet.Birthdate;
+                petUpdate.Price = pet.Price;
+            }
+
+            return petUpdate;
+        }
+
+        public Pet SearchPet(int id)
+        {
+            return _petTable.Find(pet => pet.Id == id);
         }
     }
 }

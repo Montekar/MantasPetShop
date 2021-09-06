@@ -10,6 +10,10 @@ namespace Mantas.PetShop.Core.IServices
         Pet CreatePet(Pet pet);
         Pet DeletePet(int id);
         Pet UpdatePet(Pet pet);
-        
+
+        Pet SearchPet(int id);
+
+        List<Pet> GetFiveCheapestPets();
+        List<Pet> GetPetsByPrice();
     }
 }

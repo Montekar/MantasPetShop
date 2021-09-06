@@ -20,5 +20,7 @@
         public const string SearchOptionId = "...::Type 1::... Search by Id";
         public const string SearchOptionQuery = "...::Type 2::... Search by query";
         public const string SearchOptionGenre = "...::Type 3::...Please Decide what to search for (1 - Id, 2 - Title, 0 - To Go Back)";
+        public static readonly string GetPetsByPrice = "...::Type 6::... To get all pets sorted by price";
+        public static readonly string GetFiveCheapestPets = "...::Type 7::... To get 5 cheapest pets";
     }
 }

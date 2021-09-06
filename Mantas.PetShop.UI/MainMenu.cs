@@ -45,13 +45,40 @@ namespace Mantas.PetShop.UI
                 {
                     SearchForAPet();
                 }
+                else if (choice == 6)
+                {
+                    GetPetsByPrice();
+                }
+                else if (choice == 7)
+                {
+                    GetFiveCheapestPets();
+                }
                 else if (choice == -1 )
                 {
                     PleaseTryAgain();
                 }
+
+                Console.ReadLine();
+                Console.Clear();
             }
         }
-        
+
+        private void GetPetsByPrice()
+        {
+            foreach (var pet in _petService.GetPetsByPrice())
+            {
+                Print($"{pet.Id}, {pet.Name}, {pet.PetType}, {pet.Birthdate}, {pet.Color}, {pet.Price}");
+            }
+        }
+
+        private void GetFiveCheapestPets()
+        {
+            foreach (var pet in _petService.GetFiveCheapestPets())
+            {
+                Print($"{pet.Id}, {pet.Name}, {pet.PetType}, {pet.Birthdate}, {pet.Color}, {pet.Price}");
+            }
+        }
+
         private int GetMainMenuSelection()
         {
             ShowMainMenu();
@@ -73,13 +100,14 @@ namespace Mantas.PetShop.UI
             Print(StringConstants.UpdatePet);
             Print(StringConstants.ShowAllPets);
             Print(StringConstants.SearchForAPet);
+            Print(StringConstants.GetPetsByPrice);
+            Print(StringConstants.GetFiveCheapestPets);
         }
         
         
         public void CreatePet()
         {
-            Print("Write the name of the new pet:");
-            var petName = Console.ReadLine();
+            var petName = AskQuestion("Write the name of the new pet:");
             Print("Write the type of the new pet:");
             string? petType = Console.ReadLine();
             Print("Write the birthday of the new pet:");
@@ -100,6 +128,12 @@ namespace Mantas.PetShop.UI
             pet = _petService.CreatePet(pet);
             Print($"New pet create with the name of: {pet.Name} Type: {pet.PetType} BDay: {pet.Birthdate} Color: {pet.Color} Price: {pet.Price}");
         }
+
+        public string AskQuestion(string question)
+        {
+            Print(question);
+            return Console.ReadLine();
+        }
         
         public void DeletePet()
         {
@@ -116,7 +150,7 @@ namespace Mantas.PetShop.UI
 
         public void UpdatePet()
         {
-            
+            AskQuestion("Enter Pet Name");
         }
 
         public void ShowAllPets()
@@ -131,7 +165,17 @@ namespace Mantas.PetShop.UI
 
         public void SearchForAPet()
         {
-            
+            int chosenId;
+            while (!int.TryParse(AskQuestion("Provide Id of the pet: "), out chosenId))
+            {
+                Print("Please enter correct number value");
+            }
+            Pet searchPet = _petService.SearchPet(chosenId);
+            if (searchPet != null)
+            {
+                Print("Pet has been found!");
+                Print($"Name: {searchPet.Name} Type: {searchPet.PetType} Color: {searchPet.Color} Price: {searchPet.Price}" );
+            }
         }
         
         private void PleaseTryAgain()

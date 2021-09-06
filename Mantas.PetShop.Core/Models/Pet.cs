@@ -4,12 +4,12 @@ namespace Mantas.PetShop.Core.Models
 {
     public class Pet
     {
-        public int Id;
-        public string Name;
-        public string? PetType;
-        public DateTime Birthdate;
-        public DateTime SoldDate;
-        public string Color;
-        public double Price;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string? PetType { get; set; }
+        public DateTime Birthdate { get; set; }
+        public DateTime SoldDate { get; set; }
+        public string Color { get; set; }
+        public double Price { get; set; }
     }
 }

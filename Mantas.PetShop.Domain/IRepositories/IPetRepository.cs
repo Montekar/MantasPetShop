@@ -5,10 +5,11 @@ namespace Mantas.PetShop.Domain.IRepositories
 {
     public interface IPetRepository
     {
-        List<Pet> GetPets(); 
+        IEnumerable<Pet> GetPets(); 
         
         Pet CreatePet(Pet pet);
         Pet DeletePet(int id);
         Pet UpdatePet(Pet pet);
+        Pet SearchPet(int id);
     }
 }
