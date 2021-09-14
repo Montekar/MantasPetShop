@@ -9,52 +9,47 @@ namespace Mantas.PetShop.Domain.Services
     public class PetService : IPetService
 
     {
-        private IPetRepository _repo;
+        private IPetRepository _petRepo;
 
-        public PetService(IPetRepository repo)
+        public PetService(IPetRepository petRepo)
         {
-            _repo = repo;
+            _petRepo = petRepo;
         }
         
         public List<Pet> GetPets()
         {
-            return _repo.GetPets().ToList();
+            return _petRepo.GetPets().ToList();
         }
 
         public Pet CreatePet(Pet pet)
         {
-            return _repo.CreatePet(pet);
-        }
-
-        public Pet DeletePet(Pet pet)
-        {
-            throw new System.NotImplementedException();
+            return _petRepo.CreatePet(pet);
         }
 
         public Pet DeletePet(int id)
         {
-            return _repo.DeletePet(id);        
+            return _petRepo.DeletePet(id);        
         }
 
         public Pet UpdatePet(Pet pet)
         {
-            return _repo.UpdatePet(pet);
+            return _petRepo.UpdatePet(pet);
         }
 
         public Pet SearchPet(int id)
         {
-            return _repo.SearchPet(id);
+            return _petRepo.SearchPet(id);
         }
 
         public List<Pet> GetFiveCheapestPets()
         {
-            IEnumerable<Pet> list = _repo.GetPets();
+            IEnumerable<Pet> list = _petRepo.GetPets();
             return list.OrderBy(pet => pet.Price).Take(5).ToList();
         }
 
         public List<Pet> GetPetsByPrice()
         {
-            IEnumerable<Pet> list = _repo.GetPets();
+            IEnumerable<Pet> list = _petRepo.GetPets();
             return list.OrderBy(pet => pet.Price).ToList();
         }
     }

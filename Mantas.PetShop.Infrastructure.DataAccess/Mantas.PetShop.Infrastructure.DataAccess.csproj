@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Mantas.PetShop.Core\Mantas.PetShop.Core.csproj" />
+      <ProjectReference Include="..\Mantas.PetShop.Domain\Mantas.PetShop.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+    </ItemGroup>
+
+</Project>

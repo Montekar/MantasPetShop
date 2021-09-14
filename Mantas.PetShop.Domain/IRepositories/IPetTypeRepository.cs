@@ -5,8 +5,6 @@ namespace Mantas.PetShop.Domain.IRepositories
 {
     public interface IPetTypeRepository
     {
-        List<PetType> GetPetTypes();
-
-        PetType createPetType();
+        IEnumerable<PetType> GetPetTypes();
     }
 }
