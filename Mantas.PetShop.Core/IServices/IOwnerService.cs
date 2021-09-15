@@ -5,10 +5,10 @@ namespace Mantas.PetShop.Core.IServices
 {
     public interface IOwnerService
     {
-        Owner Create(Owner owner);
-        List<Owner> ReadAll();
-        Owner Read(int id);
-        Owner Update(Owner owner);
-        Owner Delete(int id);
+        Owner CreateOwner(Owner owner);
+        List<Owner> GetOwners();
+        Owner ReadOwner(int id);
+        Owner UpdateOwner(Owner owner);
+        Owner DeleteOwner(int id);
     }
 }

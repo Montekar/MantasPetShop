@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Mantas.PetShop.Core.Models
+﻿namespace Mantas.PetShop.WebAPI.Dtos.Owner
 {
-    public class Owner
+    public class PutOwnerDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

@@ -9,24 +9,24 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
         private static int _id;
         private static List<Owner> _owners = new List<Owner>();
         
-        public Owner Create(Owner owner)
+        public Owner CreateOwner(Owner owner)
         {
             owner.Id = ++_id;
             _owners.Add(owner);
             return owner;
         }
 
-        public IEnumerable<Owner> ReadAll()
+        public IEnumerable<Owner> GetOwners()
         {
             return _owners;
         }
 
-        public Owner Read(int id)
+        public Owner ReadOwner(int id)
         {
             return _owners.Find(owner => owner.Id == id);
         }
 
-        public Owner Update(Owner owner)
+        public Owner UpdateOwner(Owner owner)
         {
             Owner own = _owners.Find(o => o.Id == owner.Id);
             if (own != null)
@@ -38,7 +38,7 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
             return own;
         }
 
-        public Owner Delete(int id)
+        public Owner DeleteOwner(int id)
         {
             Owner owner = _owners.Find(o => o.Id == id);
             if (owner != null)

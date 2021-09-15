@@ -15,7 +15,7 @@ namespace Mantas.PetShop.Sql.Repositories
             _ctx = ctx;
         }
 
-        public Owner Create(Owner owner)
+        public Owner CreateOwner(Owner owner)
         {
             var entity = new OwnerEntity
             {
@@ -32,7 +32,7 @@ namespace Mantas.PetShop.Sql.Repositories
             };
         }
 
-        public IEnumerable<Owner> ReadAll()
+        public IEnumerable<Owner> GetOwners()
         {
             return _ctx.Owner.Select(ownerEntity => new Owner
             {
@@ -42,7 +42,7 @@ namespace Mantas.PetShop.Sql.Repositories
             }).ToList();
         }
 
-        public Owner Read(int id)
+        public Owner ReadOwner(int id)
         {
             return _ctx.Owner.Select(ownerEntity => new Owner
             {
@@ -54,7 +54,7 @@ namespace Mantas.PetShop.Sql.Repositories
             //link query with lambda expression //default to return null if nothing is found
         }
 
-        public Owner Update(Owner owner)
+        public Owner UpdateOwner(Owner owner)
         {
             var entity = new OwnerEntity()
             {
@@ -67,7 +67,7 @@ namespace Mantas.PetShop.Sql.Repositories
             return new Owner();
         }
 
-        public Owner Delete(int id)
+        public Owner DeleteOwner(int id)
         {
             var savedEntity = _ctx.Owner.Remove(new OwnerEntity { Id = id }).Entity;
             _ctx.SaveChanges();

@@ -2,92 +2,90 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mantas.PetShop.Core.IServices;
+using Mantas.PetShop.Core.Models;
+using Mantas.PetShop.WebAPI.Dtos.Owner;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mantas.PetShop.WebAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class OwnersController : Controller
     {
-        // GET: Owners
-        public ActionResult Index()
-        {
-            return null;
-        }
+        private readonly IOwnerService _ownerService;
 
-        // GET: Owners/Details/5
-        public ActionResult Details(int id)
+        public OwnersController(IOwnerService ownerService)
         {
-            return null;
+            _ownerService = ownerService;
         }
-
-        // GET: Owners/Create
-        public ActionResult Create()
+        
+        [HttpGet] 
+        public ActionResult<List<Owner>> ReadAll()
         {
-            return null;
+            return Ok(_ownerService.GetOwners());
         }
-
-        // POST: Owners/Create
+        
+        [HttpGet("{id}")] 
+        public ActionResult<Owner> ReadById(int id)
+        {
+            var owner = _ownerService.ReadOwner(id);
+            return Ok(new GetOwnerByIdDto
+            {
+                FirstName = owner.FirstName,
+                LastName = owner.LastName,
+                Email = owner.Email
+            });
+        }
+        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult<Owner> CreateOwner([FromBody] PostOwnerDto dto)
         {
+            var ownerFromDto = new Owner
+            {
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email,
+            };
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
+                var newOwner = _ownerService.CreateOwner(ownerFromDto);
+                return Created(
+                    $"https://localhost:5001/api/owners/{newOwner.Id}",
+                    newOwner);
             }
-            catch
+            catch (ArgumentException ae)
             {
-                return null;
+                return BadRequest(ae.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
             }
         }
-
-        // GET: Owners/Edit/5
-        public ActionResult Edit(int id)
+        
+        [HttpPut("{id}")]
+        public ActionResult<Owner> UpdateOwner(int id, [FromBody] PutOwnerDto dto)
         {
-            return null;
+            if (id != dto.Id)
+            {
+                return BadRequest("Id in param must be the same as in object");
+            }
+            return Ok(_ownerService.UpdateOwner(new Owner
+            {
+                Id = id,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email
+            }));
         }
-
-        // POST: Owners/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        
+        [HttpDelete("{id}")]
+        public ActionResult<Owner> DeleteOwner(int id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return null;
-            }
+            return Ok(_ownerService.DeleteOwner(id));
         }
-
-        // GET: Owners/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return null;
-        }
-
-        // POST: Owners/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        
     }
 }

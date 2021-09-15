@@ -14,29 +14,29 @@ namespace Mantas.PetShop.Domain.Services
             _ownerRepository = ownerRepository;
         }
 
-        public Owner Create(Owner owner)
+        public Owner CreateOwner(Owner owner)
         {
-            return _ownerRepository.Create(owner);
+            return _ownerRepository.CreateOwner(owner);
         }
 
-        public List<Owner> ReadAll()
+        public List<Owner> GetOwners()
         {
-            return _ownerRepository.ReadAll().ToList();
+            return _ownerRepository.GetOwners().ToList();
         }
 
-        public Owner Read(int id)
+        public Owner ReadOwner(int id)
         {
-            return _ownerRepository.Read(id);
+            return _ownerRepository.ReadOwner(id);
         }
 
-        public Owner Update(Owner owner)
+        public Owner UpdateOwner(Owner owner)
         {
-            return _ownerRepository.Update(owner);
+            return _ownerRepository.UpdateOwner(owner);
         }
 
-        public Owner Delete(int id)
+        public Owner DeleteOwner(int id)
         {
-            return _ownerRepository.Delete(id);
+            return _ownerRepository.DeleteOwner(id);
         }
     }
 }
