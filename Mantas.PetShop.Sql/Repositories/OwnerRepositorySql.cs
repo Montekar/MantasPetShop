@@ -20,7 +20,8 @@ namespace Mantas.PetShop.Sql.Repositories
             var entity = new OwnerEntity
             {
                 FirstName = owner.FirstName,
-                LastName = owner.LastName
+                LastName = owner.LastName,
+                Email = owner.Email
             };
             var savedEntity = _ctx.Owner.Add(entity).Entity;
             _ctx.SaveChanges();
@@ -28,7 +29,8 @@ namespace Mantas.PetShop.Sql.Repositories
             {
                 Id = savedEntity.Id,
                 FirstName = savedEntity.FirstName,
-                LastName = savedEntity.LastName
+                LastName = savedEntity.LastName,
+                Email = owner.Email
             };
         }
 
@@ -38,7 +40,8 @@ namespace Mantas.PetShop.Sql.Repositories
             {
                 Id = ownerEntity.Id,
                 FirstName = ownerEntity.FirstName,
-                LastName = ownerEntity.LastName
+                LastName = ownerEntity.LastName,
+                Email = ownerEntity.Email
             }).ToList();
         }
 
@@ -48,7 +51,8 @@ namespace Mantas.PetShop.Sql.Repositories
             {
                 Id = ownerEntity.Id,
                 FirstName = ownerEntity.FirstName,
-                LastName = ownerEntity.LastName
+                LastName = ownerEntity.LastName,
+                Email = ownerEntity.Email
             })
                 .FirstOrDefault(o => o.Id == id);
             //link query with lambda expression //default to return null if nothing is found
@@ -60,7 +64,8 @@ namespace Mantas.PetShop.Sql.Repositories
             {
                 Id = owner.Id,
                 FirstName = owner.FirstName,
-                LastName = owner.LastName
+                LastName = owner.LastName,
+                Email = owner.Email
             };
             var savedEntity = _ctx.Owner.Update(entity).Entity;
             _ctx.SaveChanges();
@@ -75,7 +80,8 @@ namespace Mantas.PetShop.Sql.Repositories
             {
                 Id = savedEntity.Id,
                 FirstName = savedEntity.FirstName,
-                LastName = savedEntity.LastName
+                LastName = savedEntity.LastName,
+                Email = savedEntity.Email
             };
         }
     }
