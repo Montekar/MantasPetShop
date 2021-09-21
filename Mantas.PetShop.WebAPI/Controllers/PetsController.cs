@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mantas.PetShop.Core.IServices;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.WebAPI.Dtos.Pets;
@@ -19,9 +20,16 @@ namespace Mantas.PetShop.WebAPI.Controllers
         }
         
         [HttpGet] 
-        public ActionResult<List<Pet>> ReadAll()
+        public ActionResult<List<RaedAllPetDto>> ReadAll()
         {
-            return Ok(_petService.GetPets());
+            var pets = _petService.GetPets().Select(p => new RaedAllPetDto()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price
+                
+            });
+            return Ok(pets);
         }
         
         [HttpGet("{id}")] 
@@ -78,7 +86,11 @@ namespace Mantas.PetShop.WebAPI.Controllers
                 Id = id,
                 Name = dto.Name,
                 Color = dto.Color,
-                Price = dto.Price
+                Price = dto.Price,
+                Owner = new Owner
+                {
+                    Id = dto.OwnerId
+                }
             }));
         }
         

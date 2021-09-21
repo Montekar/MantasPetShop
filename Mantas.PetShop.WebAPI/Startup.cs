@@ -47,10 +47,11 @@ namespace Mantas.PetShop.WebAPI
                         .UseSqlite("Data Source=petShop.db");
                 }, ServiceLifetime.Transient);
             
-            services.AddScoped<IPetRepository, PetRepository>();
-            services.AddScoped<IPetService, PetService>();
-            services.AddScoped<IOwnerRepository, OwnerRepositorySql>();
             services.AddScoped<IPetRepository, PetRepositorySql>();
+            services.AddScoped<IPetService, PetService>();
+            
+            services.AddScoped<IOwnerRepository, OwnerRepositorySql>();
+            services.AddScoped<IOwnerService, OwnerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
