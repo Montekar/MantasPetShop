@@ -1,6 +1,6 @@
-﻿namespace Mantas.PetShop.Core.Models
+﻿namespace Mantas.PetShop.Sql.Entities
 {
-    public class PetType
+    public class PetTypeEntity
     {
         public int Id { get; set; }
         public string Type { get; set; }

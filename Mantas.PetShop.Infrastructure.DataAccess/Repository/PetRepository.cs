@@ -17,21 +17,18 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
             {
                 Name = "pukis",
                 Color = "black",
-                PetType = "Cat",
                 Price = 100
             });
             CreatePet(new Pet
             {
                 Name = "jonas",
                 Color = "black",
-                PetType = "dog",
                 Price = 200
             });
             CreatePet(new Pet
             {
                 Name = "jolanta",
                 Color = "black",
-                PetType = "Parrot",
                 Price = 999
             });
         }

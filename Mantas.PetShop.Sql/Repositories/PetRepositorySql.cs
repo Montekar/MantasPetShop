@@ -18,15 +18,15 @@ namespace Mantas.PetShop.Sql.Repositories
         public IEnumerable<Pet> GetPets()
         {
             return _ctx.Pet
-                .Select(videoEntity => new Pet
+                .Select(savedEntity => new Pet
                 {
-                    Id = videoEntity.Id,
-                    Name = videoEntity.Name,
-                    Color = videoEntity.Color,
-                    Price = videoEntity.Price,
+                    Id = savedEntity.Id,
+                    Name = savedEntity.Name,
+                    Color = savedEntity.Color,
+                    Price = savedEntity.Price,
                     Owner = new Owner
                     {
-                        Id = videoEntity.OwnerId
+                        Id = savedEntity.OwnerId.HasValue ? savedEntity.OwnerId.Value : 0
                     }
                 })
                 .ToList();
@@ -51,7 +51,7 @@ namespace Mantas.PetShop.Sql.Repositories
                 Price = savedEntity.Price,
                 Owner = new Owner
                 {
-                    Id = savedEntity.OwnerId
+                    Id = savedEntity.OwnerId ?? 0
                 }
             };
         }
@@ -68,7 +68,7 @@ namespace Mantas.PetShop.Sql.Repositories
                 Price = savedEntity.Price,
                 Owner = new Owner
                 {
-                    Id = savedEntity.OwnerId
+                    Id = savedEntity.OwnerId ?? 0
                 }
             };
         }
@@ -93,7 +93,7 @@ namespace Mantas.PetShop.Sql.Repositories
                 Price = savedEntity.Price,
                 Owner = new Owner
                 {
-                    Id = savedEntity.OwnerId
+                    Id = savedEntity.OwnerId ?? 0
                 }
             };
         }
@@ -101,15 +101,15 @@ namespace Mantas.PetShop.Sql.Repositories
         public Pet SearchPet(int id)
         {
             return _ctx.Pet
-                .Select(videoEntity => new Pet
+                .Select(savedEntity => new Pet
                 {
-                    Id = videoEntity.Id,
-                    Name = videoEntity.Name,
-                    Color = videoEntity.Color,
-                    Price = videoEntity.Price,
+                    Id = savedEntity.Id,
+                    Name = savedEntity.Name,
+                    Color = savedEntity.Color,
+                    Price = savedEntity.Price,
                     Owner = new Owner()
                     {
-                        Id = videoEntity.OwnerId
+                        Id = savedEntity.OwnerId ?? 0
                     }
                 })
                 .FirstOrDefault(v => v.Id == id);

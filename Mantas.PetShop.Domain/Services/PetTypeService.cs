@@ -8,24 +8,36 @@ namespace Mantas.PetShop.Domain.Services
 {
     public class PetTypeService : IPetTypeService
     {
-        private IPetTypeRepository _petTypeRepo;
+        private readonly IPetTypeRepository _petTypeRepository;
 
-        public PetTypeService(IPetTypeRepository petTypeRepo)
+        public PetTypeService(IPetTypeRepository petTypeRepository)
         {
-            _petTypeRepo = petTypeRepo;
+            _petTypeRepository = petTypeRepository;
         }
 
-        public PetType Find(string type)
+        public PetType CreatePetType(PetType petType)
         {
-            var list = _petTypeRepo.GetPetTypes();
-            var result = list.SingleOrDefault(petType => petType.Name == type);
-            
-            return result;
+            return _petTypeRepository.CreatePetType(petType);
         }
 
         public List<PetType> GetPetTypes()
         {
-            return _petTypeRepo.GetPetTypes().ToList();        }
+            return _petTypeRepository.GetPetTypes().ToList();        }
+
+        public PetType ReadPetType(int id)
+        {
+            return _petTypeRepository.ReadPetType(id);
+        }
+
+        public PetType UpdatePetType(PetType petType)
+        {
+            return _petTypeRepository.UpdatePetType(petType);
+        }
+
+        public PetType DeletePetType(int id)
+        {
+            return _petTypeRepository.DeletePetType(id);
+        }
 
         public string GetAvailableTypesString()
         {
@@ -36,15 +48,23 @@ namespace Mantas.PetShop.Domain.Services
             {
                 if (i < list.Capacity && i+1 !=list.Capacity)
                 {
-                    types += list[i].Name+ ",";
+                    types += list[i].Type+ ",";
                 }
                 else
                 {
-                    types += list[i].Name;
+                    types += list[i].Type;
                 }
             }
             types += ")";
             return types;
+        }
+        
+        public PetType Find(string type)
+        {
+            var list = _petTypeRepository.GetPetTypes();
+            var result = list.SingleOrDefault(petType => petType.Type == type);
+            
+            return result;
         }
     }
 }

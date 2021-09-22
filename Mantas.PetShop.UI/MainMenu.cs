@@ -120,7 +120,6 @@ namespace Mantas.PetShop.UI
             var pet = new Pet()
             {
                 Name = petName,
-                PetType = petType,
                 Birthdate = petBDay,
                 Color = petColor,
                 Price = petPrice

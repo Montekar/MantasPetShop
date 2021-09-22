@@ -52,6 +52,9 @@ namespace Mantas.PetShop.WebAPI
             
             services.AddScoped<IOwnerRepository, OwnerRepositorySql>();
             services.AddScoped<IOwnerService, OwnerService>();
+
+            services.AddScoped<IPetTypeRepository, PetTypeRepositorySql>();
+            services.AddScoped<IPetTypeService, PetTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

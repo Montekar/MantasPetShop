@@ -5,9 +5,12 @@ namespace Mantas.PetShop.Core.IServices
 {
     public interface IPetTypeService
     {
-        PetType Find(string type);
+        PetType CreatePetType(PetType petType);
         List<PetType> GetPetTypes();
-
-        string GetAvailableTypesString();
+        PetType ReadPetType(int id);
+        PetType UpdatePetType(PetType petType);
+        PetType DeletePetType(int id);
+        
+        
     }
 }

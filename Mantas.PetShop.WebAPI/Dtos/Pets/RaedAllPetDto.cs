@@ -1,4 +1,6 @@
-﻿namespace Mantas.PetShop.WebAPI.Dtos.Pets
+﻿using Mantas.PetShop.Sql.Entities;
+
+namespace Mantas.PetShop.WebAPI.Dtos.Pets
 {
     public class RaedAllPetDto
     {

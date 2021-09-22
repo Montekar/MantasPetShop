@@ -6,30 +6,50 @@ namespace Mantas.PetShop.Infrastructure.DataAccess.Repository
 {
     public class PetTypeRepository : IPetTypeRepository
     {
-        private static List<PetType> petTypes = new List<PetType>();
+        private static List<PetType> _petTypes = new List<PetType>();
         
         public PetTypeRepository()
         {
-            petTypes.Add(new PetType()
+            _petTypes.Add(new PetType()
             {
                 Id = 1,
-                Name = "Cat"
+                Type = "Cat"
             });
-            petTypes.Add(new PetType()
+            _petTypes.Add(new PetType()
             {
                 Id = 2,
-                Name = "Dog"
+                Type = "Dog"
             });
-            petTypes.Add(new PetType()
+            _petTypes.Add(new PetType()
             {
                 Id = 3,
-                Name = "Goat"
+                Type = "Goat"
             });
+        }
+
+        public PetType CreatePetType(PetType owner)
+        {
+            throw new System.NotImplementedException();
         }
 
         public IEnumerable<PetType> GetPetTypes()
         {
-            return petTypes;
+            return _petTypes;
+        }
+
+        public PetType ReadPetType(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public PetType UpdatePetType(PetType owner)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public PetType DeletePetType(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
