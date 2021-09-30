@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Mantas.PetShop.Core.Filtering;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Domain.IRepositories;
 using Mantas.PetShop.Sql.Entities;
@@ -9,27 +10,50 @@ namespace Mantas.PetShop.Sql.Repositories
     public class PetRepositorySql : IPetRepository
     {
         private readonly PetShopContext _ctx;
-        
+        private IPetRepository _petRepositoryImplementation;
+
         public PetRepositorySql(PetShopContext ctx)
         {
             _ctx = ctx;
         }
 
-        public IEnumerable<Pet> GetPets()
+        public IEnumerable<Pet> GetPets(Filter filter)
         {
-            return _ctx.Pet
-                .Select(savedEntity => new Pet
+            var selectQuery = _ctx.Pet
+                .Select(pe => new Pet
                 {
-                    Id = savedEntity.Id,
-                    Name = savedEntity.Name,
-                    Color = savedEntity.Color,
-                    Price = savedEntity.Price,
-                    Owner = new Owner
-                    {
-                        Id = savedEntity.OwnerId.HasValue ? savedEntity.OwnerId.Value : 0
-                    }
-                })
-                .ToList();
+                    Id = pe.Id,
+                    Name = pe.Name,
+                    Color = pe.Color
+                });
+            var paging = selectQuery.Skip(filter.Count * (filter.Page - 1))
+                .Take(filter.Count); //How many to get back in the Query
+            
+            if (string.IsNullOrEmpty(filter.SortOrder) || filter.SortOrder.Equals("asc"))
+            {
+                switch (filter.SortBy)
+                {
+                    case "id": 
+                        paging = paging.OrderBy(p => p.Id);
+                        break;
+                    case "name":
+                        paging = paging.OrderBy(p => p.Name);
+                        break;
+                }
+            }
+            else
+            {
+                switch (filter.SortBy)
+                {
+                    case "id": 
+                        paging = paging.OrderByDescending(p => p.Id);
+                        break;
+                    case "name":
+                        paging = paging.OrderByDescending(p => p.Name);
+                        break;
+                }
+            }
+            return paging.ToList();
         }
 
         public Pet CreatePet(Pet pet)
@@ -113,6 +137,11 @@ namespace Mantas.PetShop.Sql.Repositories
                     }
                 })
                 .FirstOrDefault(v => v.Id == id);
+        }
+
+        public int Count()
+        {
+            return _ctx.Pet.Count();
         }
     }
 }

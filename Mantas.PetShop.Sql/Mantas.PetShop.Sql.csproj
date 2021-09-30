@@ -10,6 +10,8 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.10" />
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" Version="5.0.2" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Sql.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +16,23 @@ namespace Mantas.PetShop.Sql
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var random = new Random();
+            var names = new List<string> { "Wuf", "Muh", "Niav" };
+            var colors = new List<string> { "Black", "White", "Orange" };
+            for (var i = 1; i < 1000; i++)
+            {
+                var petName = $"{names[random.Next(0, 3)]} {i}";
+                var petColor = $"{colors[random.Next(0, 3)]} {i}";
+                modelBuilder.Entity<PetEntity>()
+                    .HasData(new PetEntity
+                    {
+                        Id = i,
+                        Name = petName,
+                        Color = petColor
+                    });
+            }
+            
+            /*
             modelBuilder.Entity<PetEntity>().HasOne(o => o.Owner).WithMany(p => p.Pets);
             
             modelBuilder.Entity<PetEntity>()
@@ -31,10 +50,15 @@ namespace Mantas.PetShop.Sql
             modelBuilder.Entity<PetTypeEntity>().HasData(new PetTypeEntity() {Id = 1, Type = "Cat"});
             modelBuilder.Entity<PetTypeEntity>().HasData(new PetTypeEntity() {Id = 2, Type = "Dog"});
             modelBuilder.Entity<PetTypeEntity>().HasData(new PetTypeEntity() {Id = 3, Type = "Goat"});
+            */
         }
 
         public DbSet<PetEntity> Pet { get; set; }
         public DbSet<OwnerEntity> Owner { get; set; }
         public DbSet<PetTypeEntity> PetType { get; set; }
+        
+
+        public DbSet<User> Users { get; set; }
+
     }
 }

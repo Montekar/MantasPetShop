@@ -1,10 +1,15 @@
 
+using System;
 using Mantas.PetShop.Core.IServices;
+using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Domain.IRepositories;
 using Mantas.PetShop.Domain.Services;
 using Mantas.PetShop.Infrastructure.DataAccess.Repository;
 using Mantas.PetShop.Sql;
+using Mantas.PetShop.Sql.Helpers;
 using Mantas.PetShop.Sql.Repositories;
+using Mantas.PetShop.Sql.Repositories.UserRepo;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace Mantas.PetShop.WebAPI
@@ -22,12 +28,43 @@ namespace Mantas.PetShop.WebAPI
         {
             Configuration = configuration;
         }
+        
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        {
+            Configuration = configuration;
+            Environment = env;
+        }
 
         public IConfiguration Configuration { get; }
+        
+        private IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Create a byte array with random values. This byte array is used
+            // to generate a key for signing JWT tokens.
+            Byte[] secretBytes = new byte[40];
+            Random rand = new Random();
+            rand.NextBytes(secretBytes);
+            
+            //Add JWT authentication
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = false,
+                    //ValidAudience = "CoMetaApiClient",
+                    ValidateIssuer = false,
+                    //ValidIssuer = "CoMetaApi",
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
+                    ValidateLifetime = true, //validate the expiration and not before values in the token
+                    ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
+                };
+            });
+            
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +92,10 @@ namespace Mantas.PetShop.WebAPI
 
             services.AddScoped<IPetTypeRepository, PetTypeRepositorySql>();
             services.AddScoped<IPetTypeService, PetTypeService>();
+
+            services.AddScoped<IRepository<User>, UserRepository>();
+            
+            services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +118,9 @@ namespace Mantas.PetShop.WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

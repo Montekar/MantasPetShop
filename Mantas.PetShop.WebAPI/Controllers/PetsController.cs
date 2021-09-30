@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Mantas.PetShop.Core.Filtering;
 using Mantas.PetShop.Core.IServices;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.WebAPI.Dtos.Pets;
@@ -20,12 +21,13 @@ namespace Mantas.PetShop.WebAPI.Controllers
         }
         
         [HttpGet] 
-        public ActionResult<List<RaedAllPetDto>> ReadAll()
+        public ActionResult<List<RaedAllPetDto>> ReadAll([FromQuery] Filter filter)
         {
-            var pets = _petService.GetPets().Select(p => new RaedAllPetDto()
+            var pets = _petService.GetPets(filter).Select(p => new RaedAllPetDto()
             {
                 Id = p.Id,
                 Name = p.Name,
+                Color = p.Color,
                 Price = p.Price
                 
             });

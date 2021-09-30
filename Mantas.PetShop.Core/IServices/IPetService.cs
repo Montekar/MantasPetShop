@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Mantas.PetShop.Core.Filtering;
 using Mantas.PetShop.Core.Models;
 
 namespace Mantas.PetShop.Core.IServices
 {
     public interface IPetService
     {
-        List<Pet> GetPets();
+        List<Pet> GetPets(Filter filter);
 
         Pet CreatePet(Pet pet);
         Pet DeletePet(int id);
@@ -13,7 +14,7 @@ namespace Mantas.PetShop.Core.IServices
 
         Pet SearchPet(int id);
 
-        List<Pet> GetFiveCheapestPets();
-        List<Pet> GetPetsByPrice();
+        List<Pet> GetFiveCheapestPets(Filter filter);
+        List<Pet> GetPetsByPrice(Filter filter);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Mantas.PetShop.Core.Filtering;
 using Mantas.PetShop.Core.IServices;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Domain.Services;
@@ -155,7 +156,7 @@ namespace Mantas.PetShop.UI
         public void ShowAllPets()
         {
             Print("Here are all available pets");
-            var pets = _petService.GetPets();
+            var pets = _petService.GetPets(new Filter());
             foreach (var pet in pets)
             {
                 Print($"{pet.Id}, {pet.Name}, {pet.PetType}, {pet.Birthdate}, {pet.Color}, {pet.Price}");
