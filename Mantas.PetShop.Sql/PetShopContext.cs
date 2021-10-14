@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Mantas.PetShop.Core.Models;
 using Mantas.PetShop.Sql.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,21 @@ namespace Mantas.PetShop.Sql
                     });
             }
             
+            long idx = 1;
+            foreach (RoleTypes roleTypes in Enum.GetValues(typeof(RoleTypes)).Cast<RoleTypes>())
+            {
+                Role role = new Role()
+                {
+                    Id = idx,
+                    Name = roleTypes.ToString()
+                };
+                modelBuilder.Entity<Role>().HasData(role);
+                idx++;
+            }
+            //base.OnModelCreating(modelBuilder);
+            
+            
+            
             /*
             modelBuilder.Entity<PetEntity>().HasOne(o => o.Owner).WithMany(p => p.Pets);
             
@@ -59,6 +75,8 @@ namespace Mantas.PetShop.Sql
         
 
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        
     }
 }

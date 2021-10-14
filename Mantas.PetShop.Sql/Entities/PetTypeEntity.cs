@@ -1,4 +1,5 @@
 ﻿namespace Mantas.PetShop.Sql.Entities
+
 {
     public class PetTypeEntity
     {

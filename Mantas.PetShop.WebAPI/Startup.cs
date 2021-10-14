@@ -96,6 +96,18 @@ namespace Mantas.PetShop.WebAPI
             services.AddScoped<IRepository<User>, UserRepository>();
             
             services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("petshop-policy", 
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .WithOrigins("http://localhost:4200");
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,10 +131,15 @@ namespace Mantas.PetShop.WebAPI
 
             app.UseRouting();
 
+            
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+
+            app.UseCors("petshop-policy");
+            
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
